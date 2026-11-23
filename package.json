@@ -1,0 +1,1 @@
+{"description":"HSC Math Game on Cloudflare Pages (static game + Pages Functions + KV), ported from Netlify","name":"hsc-math-game-cloudflare","private":true,"scripts":{"deploy":"npx wrangler pages deploy --project-name hsc-math-game","dev":"npx wrangler pages dev public","test":"node test/local-test.mjs"},"type":"module","version":"1.0.0"}

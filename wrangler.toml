@@ -1,0 +1,33 @@
+# HSC Math Game — Cloudflare Pages project.
+# Static game lives in public/, API lives in functions/ (Pages Functions).
+name = "hsc-math-game"
+compatibility_date = "2025-01-01"
+# nodejs_compat gives the functions node:crypto / node:buffer, which the
+# ported backend uses for HMAC session tokens (same format as Netlify).
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = "public"
+
+# One KV namespace replaces both Netlify Blobs stores ("game-data" and
+# "users"); keys are separated by prefix inside the namespace.
+# Create it with:  npx wrangler kv namespace create HSC_STORE
+# then paste the returned id below (and add the same binding in the
+# Cloudflare dashboard → Pages → hsc-math-game → Settings → Functions).
+[[kv_namespaces]]
+binding = "HSC_STORE"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
+
+# Environment variables / secrets (set via dashboard or
+# `npx wrangler pages secret put <NAME> --project-name hsc-math-game`):
+#   SESSION_SECRET     (secret, required — signs session tokens + OTP hashes)
+#   GOOGLE_CLIENT_ID   (required for Google login)
+#   GOOGLE_CLIENT_SECRET (secret, required for Google login)
+#   ADMIN_EMAIL        (admin panel unlock; the admin Gmail)
+#   GEMINI_API_KEY     (secret, AI tutor; unset → tutor shows "not switched on")
+#   GEMINI_MODEL       (optional; default gemini-3.7-flash)
+#   AI_DAILY_LIMIT     (optional; default 20)
+#   EMAIL_API_URL      (HTTPS endpoint that sends the OTP email; unset → OTP 503)
+#   EMAIL_API_KEY      (secret, optional Bearer key for EMAIL_API_URL)
+#   EMAIL_FROM         (optional From address for OTP mail)
+#   SMTP_USER / SMTP_PASS (legacy Netlify names; accepted but unused on
+#                          Workers — SMTP cannot run there; SMTP_USER is
+#                          only used as the default From address)
